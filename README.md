@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/PegasusHeavyIndustries/enginex/main/.github/logo.svg" alt="EngineX" width="400">
+  <img src="https://raw.githubusercontent.com/pegasusheavy/enginex/main/.github/logo.svg" alt="EngineX" width="400">
 </p>
 
 <h1 align="center">EngineX</h1>
@@ -79,7 +79,7 @@ bun add @pegasusheavy/enginex
 ### From Source
 
 ```bash
-git clone https://github.com/PegasusHeavyIndustries/enginex.git
+git clone https://github.com/pegasusheavy/enginex.git
 cd enginex
 bun install
 bun test

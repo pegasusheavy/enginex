@@ -7,12 +7,12 @@
   "license": "MIT OR Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PegasusHeavyIndustries/enginex.git"
+    "url": "git+https://github.com/pegasusheavy/enginex.git"
   },
   "bugs": {
-    "url": "https://github.com/PegasusHeavyIndustries/enginex/issues"
+    "url": "https://github.com/pegasusheavy/enginex/issues"
   },
-  "homepage": "https://github.com/PegasusHeavyIndustries/enginex#readme",
+  "homepage": "https://github.com/pegasusheavy/enginex#readme",
   "funding": {
     "type": "patreon",
     "url": "https://www.patreon.com/c/PegasusHeavyIndustries"
