@@ -1,0 +1,195 @@
+<div class="docs-layout">
+  <!-- Sidebar -->
+  <aside class="docs-sidebar">
+    <nav class="sidebar-nav">
+      <h3 class="sidebar-title">Getting Started</h3>
+      @for (section of sections; track section.id) {
+        <button
+          class="sidebar-link"
+          [class.active]="activeSection === section.id"
+          (click)="scrollTo(section.id)"
+        >
+          {{ section.title }}
+        </button>
+      }
+    </nav>
+  </aside>
+
+  <!-- Content -->
+  <main class="docs-content">
+    <section id="installation" class="docs-section">
+      <h1>Installation</h1>
+      <p>Install EngineX using your preferred package manager:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>Terminal</span>
+        </div>
+        <pre><code># Using Bun (recommended)
+bun add enginex
+
+# Using pnpm
+pnpm add enginex
+
+# Using npm
+npm install enginex</code></pre>
+      </div>
+
+      <div class="callout callout-info">
+        <strong>Note:</strong> EngineX is optimized for Bun and requires Bun v1.0 or later.
+      </div>
+    </section>
+
+    <section id="quick-start" class="docs-section">
+      <h1>Quick Start</h1>
+      <p>Create your first EngineX server in just a few lines:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>server.ts</span>
+        </div>
+        <pre><code>import &#123; HybridApplication &#125; from 'enginex';
+
+const app = new HybridApplication();
+
+// Add middleware
+app.use(async (ctx, next) =&gt; &#123;
+  const start = Date.now();
+  await next();
+  const ms = Date.now() - start;
+  console.log(`$&#123;ctx.method&#125; $&#123;ctx.path&#125; - $&#123;ms&#125;ms`);
+&#125;);
+
+// Handle requests
+app.use(async (ctx) =&gt; &#123;
+  ctx.status = 200;
+  ctx.responseBody = &#123; message: 'Hello, EngineX!' &#125;;
+&#125;);
+
+app.listen(3000, () =&gt; &#123;
+  console.log('Server running on http://localhost:3000');
+&#125;);</code></pre>
+      </div>
+
+      <p>Run your server:</p>
+      <div class="code-block">
+        <pre><code>bun run server.ts</code></pre>
+      </div>
+    </section>
+
+    <section id="middleware" class="docs-section">
+      <h1>Middleware</h1>
+      <p>EngineX uses the same middleware pattern as Koa — the "onion model":</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>middleware.ts</span>
+        </div>
+        <pre><code>import &#123; HybridApplication, cors, logger &#125; from 'enginex';
+
+const app = new HybridApplication();
+
+// Built-in middleware
+app.use(logger());           // Request logging
+app.use(cors());             // CORS headers
+app.use(errorHandler());     // Error handling
+
+// Custom middleware
+app.use(async (ctx, next) =&gt; &#123;
+  // Before request
+  console.log('Request started');
+
+  await next();  // Call next middleware
+
+  // After response
+  console.log('Request completed');
+&#125;);</code></pre>
+      </div>
+
+      <h2>Available Middleware</h2>
+      <ul class="feature-list">
+        <li><code>logger()</code> — Request/response logging</li>
+        <li><code>cors()</code> — Cross-Origin Resource Sharing</li>
+        <li><code>bodyParser()</code> — Parse JSON and form bodies</li>
+        <li><code>errorHandler()</code> — Centralized error handling</li>
+      </ul>
+    </section>
+
+    <section id="routing" class="docs-section">
+      <h1>Routing</h1>
+      <p>EngineX includes a high-performance Trie-based router:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>routes.ts</span>
+        </div>
+        <pre><code>import &#123; HybridApplication, Router &#125; from 'enginex';
+
+const app = new HybridApplication();
+const router = new Router();
+
+// Basic routes
+router.get('/', async (ctx) =&gt; &#123;
+  ctx.responseBody = &#123; message: 'Home' &#125;;
+&#125;);
+
+// Path parameters
+router.get('/users/:id', async (ctx) =&gt; &#123;
+  ctx.responseBody = &#123; userId: ctx.params.id &#125;;
+&#125;);
+
+// Route groups
+router.group('/api/v1', (r) =&gt; &#123;
+  r.get('/users', listUsers);
+  r.post('/users', createUser);
+  r.get('/users/:id', getUser);
+&#125;);
+
+app.use(router.routes());
+app.listen(3000);</code></pre>
+      </div>
+
+      <h2>HTTP Methods</h2>
+      <ul class="feature-list">
+        <li><code>router.get(path, handler)</code></li>
+        <li><code>router.post(path, handler)</code></li>
+        <li><code>router.put(path, handler)</code></li>
+        <li><code>router.delete(path, handler)</code></li>
+        <li><code>router.patch(path, handler)</code></li>
+        <li><code>router.all(path, handler)</code></li>
+      </ul>
+    </section>
+
+    <section id="context" class="docs-section">
+      <h1>Context</h1>
+      <p>The context object provides access to request and response:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>context.ts</span>
+        </div>
+        <pre><code>app.use(async (ctx) =&gt; &#123;
+  // Request properties
+  ctx.method      // 'GET', 'POST', etc.
+  ctx.path        // '/users/123'
+  ctx.url         // Full URL
+  ctx.query       // &#123; page: '1' &#125;
+  ctx.params      // &#123; id: '123' &#125;
+  ctx.headers     // Request headers
+  ctx.body        // Parsed request body
+
+  // Response properties
+  ctx.status = 200;
+  ctx.responseBody = &#123; data: 'value' &#125;;
+  ctx.set('X-Custom-Header', 'value');
+
+  // Methods
+  ctx.get('Content-Type');    // Get request header
+  ctx.set('X-Header', 'val'); // Set response header
+  ctx.throw(404, 'Not found');// Throw HTTP error
+  ctx.redirect('/login');     // Redirect
+&#125;);</code></pre>
+      </div>
+    </section>
+  </main>
+</div>

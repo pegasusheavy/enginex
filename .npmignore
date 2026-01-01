@@ -1,0 +1,65 @@
+# Source control
+.git/
+.github/
+.gitignore
+.gitattributes
+
+# Development files
+tests/
+examples/
+benchmarks/
+docs/
+
+# IDE and editor
+.cursor/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.editorconfig
+
+# Config files (dev only)
+tsconfig.json
+tsconfig.*.json
+eslint.config.js
+.eslintrc*
+.prettierrc
+.prettierignore
+commitlint.config.js
+.lintstagedrc
+.husky/
+biome.json
+
+# Build artifacts and logs
+*.log
+*.tsbuildinfo
+npm-debug.log*
+pnpm-debug.log*
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Package manager files
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+bun.lockb
+.pnpm-store/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Extra markdown files
+BENCHMARK.md
+CONTRIBUTING.md
+CHANGELOG.md

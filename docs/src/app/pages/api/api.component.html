@@ -1,0 +1,28 @@
+<div class="api-page">
+  <div class="api-header">
+    <h1>API Reference</h1>
+    <p>Complete API documentation for EngineX</p>
+  </div>
+
+  <div class="api-content">
+    @for (section of apiSections; track section.title) {
+      <section class="api-section">
+        <h2 class="api-title">{{ section.title }}</h2>
+        <div class="api-table">
+          <div class="api-table-header">
+            <span>Method / Property</span>
+            <span>Description</span>
+            <span>Returns</span>
+          </div>
+          @for (method of section.methods; track method.name) {
+            <div class="api-row">
+              <code class="api-name">{{ method.name }}</code>
+              <span class="api-desc">{{ method.desc }}</span>
+              <code class="api-return">{{ method.returns }}</code>
+            </div>
+          }
+        </div>
+      </section>
+    }
+  </div>
+</div>

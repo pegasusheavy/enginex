@@ -1,0 +1,103 @@
+<div class="benchmarks-page">
+  <div class="benchmarks-header">
+    <h1>Performance Benchmarks</h1>
+    <p>EngineX vs Koa — Real-world performance comparison</p>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <div class="summary-card">
+      <div class="card-label">EngineX Average</div>
+      <div class="card-value gradient-text">{{ averageEngineX | number }}</div>
+      <div class="card-unit">requests/sec</div>
+    </div>
+    <div class="summary-card winner">
+      <div class="card-label">Performance Gain</div>
+      <div class="card-value">+{{ averageDiff }}%</div>
+      <div class="card-unit">faster than Koa</div>
+    </div>
+    <div class="summary-card">
+      <div class="card-label">Koa Average</div>
+      <div class="card-value">{{ averageKoa | number }}</div>
+      <div class="card-unit">requests/sec</div>
+    </div>
+  </div>
+
+  <!-- Visual Benchmarks -->
+  <div class="benchmark-charts">
+    <h2>Detailed Results</h2>
+    <p class="chart-subtitle">50 connections, 5 pipelining, 10 second duration</p>
+
+    @for (bench of benchmarks; track bench.endpoint) {
+      <div class="chart-row">
+        <div class="chart-label">
+          <code>{{ bench.endpoint }}</code>
+          <span class="chart-diff">+{{ bench.diff }}%</span>
+        </div>
+        <div class="chart-bars">
+          <div class="bar-group">
+            <div class="bar bar-enginex" [style.width.%]="getBarWidth(bench.enginex)">
+              <span class="bar-value">{{ bench.enginex | number }}</span>
+            </div>
+            <span class="bar-label">EngineX</span>
+          </div>
+          <div class="bar-group">
+            <div class="bar bar-koa" [style.width.%]="getBarWidth(bench.koa)">
+              <span class="bar-value">{{ bench.koa | number }}</span>
+            </div>
+            <span class="bar-label">Koa</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Methodology -->
+  <div class="methodology">
+    <h2>Methodology</h2>
+    <div class="method-grid">
+      <div class="method-item">
+        <h3>Test Environment</h3>
+        <ul>
+          <li>Bun v1.0+</li>
+          <li>WSL2 / Linux</li>
+          <li>Same hardware for both frameworks</li>
+        </ul>
+      </div>
+      <div class="method-item">
+        <h3>Benchmark Tool</h3>
+        <ul>
+          <li>autocannon</li>
+          <li>50 concurrent connections</li>
+          <li>5 pipelining factor</li>
+          <li>10 second duration per test</li>
+        </ul>
+      </div>
+      <div class="method-item">
+        <h3>Key Optimizations</h3>
+        <ul>
+          <li>Trie-based router (O(m) lookup)</li>
+          <li>Minimal object allocation</li>
+          <li>Shared method references</li>
+          <li>Inline URL parsing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Run Your Own -->
+  <div class="run-own">
+    <h2>Run Your Own Benchmarks</h2>
+    <div class="code-block">
+      <pre><code># Clone the repository
+git clone https://github.com/PegasusHeavyIndustries/enginex
+cd enginex
+
+# Install dependencies
+bun install
+
+# Run benchmarks
+bun run bench</code></pre>
+    </div>
+  </div>
+</div>

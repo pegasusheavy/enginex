@@ -1,0 +1,134 @@
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-container">
+    <!-- Logo -->
+    <a routerLink="/" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="url(#logo-grad)"/>
+          <text x="20" y="28" font-family="Outfit" font-weight="800" font-size="22" fill="white" text-anchor="middle">X</text>
+          <defs>
+            <linearGradient id="logo-grad" x1="0" y1="0" x2="40" y2="40">
+              <stop offset="0%" stop-color="#00f5d4"/>
+              <stop offset="100%" stop-color="#7b2cbf"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="logo-text">Engine<span class="logo-x">X</span></span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <div class="nav-links">
+      @for (link of navLinks; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: link.exact || false }"
+          class="nav-link"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="nav-actions">
+      <a href="https://github.com/PegasusHeavyIndustries/enginex" target="_blank" class="nav-github">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        <span>GitHub</span>
+      </a>
+      <a href="/docs" class="nav-cta">
+        Get Started
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        @if (mobileMenuOpen) {
+          <path d="M18 6L6 18M6 6l12 12"/>
+        } @else {
+          <path d="M4 6h16M4 12h16M4 18h16"/>
+        }
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (mobileMenuOpen) {
+    <div class="mobile-menu">
+      @for (link of navLinks; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          class="mobile-link"
+          (click)="mobileMenuOpen = false"
+        >
+          {{ link.label }}
+        </a>
+      }
+      <a href="https://github.com/PegasusHeavyIndustries/enginex" target="_blank" class="mobile-link">
+        GitHub
+      </a>
+    </div>
+  }
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+  <router-outlet />
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect width="40" height="40" rx="8" fill="url(#footer-grad)"/>
+            <text x="20" y="28" font-family="Outfit" font-weight="800" font-size="22" fill="white" text-anchor="middle">X</text>
+            <defs>
+              <linearGradient id="footer-grad" x1="0" y1="0" x2="40" y2="40">
+                <stop offset="0%" stop-color="#00f5d4"/>
+                <stop offset="100%" stop-color="#7b2cbf"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">Engine<span class="logo-x">X</span></span>
+      </div>
+      <p class="footer-tagline">Blazing-fast HTTP framework for the modern web.</p>
+    </div>
+
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a routerLink="/docs">Documentation</a>
+        <a routerLink="/api">API Reference</a>
+        <a routerLink="/benchmarks">Benchmarks</a>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <a href="https://github.com/PegasusHeavyIndustries/enginex" target="_blank">GitHub</a>
+        <a href="https://github.com/PegasusHeavyIndustries/enginex/issues" target="_blank">Issues</a>
+        <a href="https://github.com/PegasusHeavyIndustries/enginex/discussions" target="_blank">Discussions</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">MIT License</a>
+        <a href="#">Apache 2.0</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Pegasus Heavy Industries. Built with 🦀 Rust + TypeScript.</p>
+  </div>
+</footer>
