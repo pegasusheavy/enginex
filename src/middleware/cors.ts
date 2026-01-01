@@ -5,7 +5,7 @@
  * configurable origins, methods, and headers.
  */
 
-import type { Next, Middleware } from "../application";
+import type { Context, Next, Middleware } from "../application";
 
 /**
  * CORS middleware options
@@ -19,7 +19,7 @@ export interface CorsOptions {
    * - function: dynamic origin check
    * @default "*"
    */
-  origin?: string | string[] | ((ctx: HybridContext) => string | false);
+  origin?: string | string[] | ((ctx: Context) => string | false);
 
   /**
    * Allowed HTTP methods
@@ -105,7 +105,7 @@ export function cors(options: CorsOptions = {}): Middleware {
     keepHeadersOnError = false,
   } = options;
 
-  return async (ctx: HybridContext, next: Next): Promise<void> => {
+  return async (ctx: Context, next: Next): Promise<void> => {
     const requestOrigin = ctx.get("origin");
 
     // Determine the origin to send

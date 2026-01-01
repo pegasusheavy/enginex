@@ -4,7 +4,7 @@
  * Provides centralized error handling with customizable responses.
  */
 
-import type { Next, Middleware } from "../application";
+import type { Context, Next, Middleware } from "../application";
 
 /**
  * HTTP error with status code
@@ -23,7 +23,7 @@ export interface ErrorHandlerOptions {
   /**
    * Custom error handler function
    */
-  handler?: (err: HttpError, ctx: HybridContext) => void | Promise<void>;
+  handler?: (err: HttpError, ctx: Context) => void | Promise<void>;
 
   /**
    * Include stack trace in development
@@ -35,7 +35,7 @@ export interface ErrorHandlerOptions {
    * Custom error logger
    * @default console.error
    */
-  logger?: (err: Error, ctx: HybridContext) => void;
+  logger?: (err: Error, ctx: Context) => void;
 
   /**
    * Always expose error message (even for 5xx errors)
@@ -114,7 +114,7 @@ export function errorHandler(options: ErrorHandlerOptions = {}): Middleware {
 
   const statusMessages = { ...STATUS_MESSAGES, ...messages };
 
-  return async (ctx: HybridContext, next: Next): Promise<void> => {
+  return async (ctx: Context, next: Next): Promise<void> => {
     try {
       await next();
     } catch (err) {

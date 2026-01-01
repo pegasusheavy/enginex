@@ -4,7 +4,7 @@
  * Provides request/response logging with timing information.
  */
 
-import type { Next, Middleware } from "../application";
+import type { Context, Next, Middleware } from "../application";
 
 /**
  * Logger options
@@ -19,12 +19,12 @@ export interface LoggerOptions {
   /**
    * Skip logging for certain requests
    */
-  skip?: (ctx: HybridContext) => boolean;
+  skip?: (ctx: Context) => boolean;
 
   /**
    * Log format function
    */
-  format?: (ctx: HybridContext, time: number) => string;
+  format?: (ctx: Context, time: number) => string;
 
   /**
    * Include timestamp
@@ -77,7 +77,7 @@ function formatTime(ms: number): string {
 /**
  * Default format function
  */
-function defaultFormat(ctx: HybridContext, time: number, useColors: boolean): string {
+function defaultFormat(ctx: Context, time: number, useColors: boolean): string {
   const status = ctx.status;
   const method = ctx.method.padEnd(7);
   const path = ctx.path;
@@ -119,7 +119,7 @@ export function logger(options: LoggerOptions = {}): Middleware {
     colors: useColors = true,
   } = options;
 
-  return async (ctx: HybridContext, next: Next): Promise<void> => {
+  return async (ctx: Context, next: Next): Promise<void> => {
     // Check if we should skip
     if (skip?.(ctx)) {
       await next();

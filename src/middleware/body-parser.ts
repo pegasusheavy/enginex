@@ -7,7 +7,7 @@
  * - text/*
  */
 
-import type { Next, Middleware } from "../application";
+import type { Context, Next, Middleware } from "../application";
 
 /**
  * Body parser options
@@ -140,7 +140,7 @@ export function bodyParser(options: BodyParserOptions = {}): Middleware {
     textTypes = ["text/*"],
   } = options;
 
-  return async (ctx: HybridContext, next: Next): Promise<void> => {
+  return async (ctx: Context, next: Next): Promise<void> => {
     // Skip if no body expected
     if (ctx.method === "GET" || ctx.method === "HEAD" || ctx.method === "DELETE") {
       await next();
