@@ -1,0 +1,53 @@
+# EngineX
+
+> Koa-compatible HTTP server for Bun
+
+EngineX brings the familiar Koa API to Bun's blazing-fast HTTP server. It provides a Koa-compatible middleware pattern with an onion-model composition, a trie-based router for efficient path matching, and batteries-included middleware for CORS, logging, error handling, and body parsing. EngineX is a zero-dependency, pure TypeScript library designed as a near drop-in replacement for Koa on Bun.
+
+## Links
+
+- [Documentation](https://pegasusheavy.github.io/enginex/)
+- [GitHub Repository](https://github.com/pegasusheavy/enginex)
+- [npm Package](https://www.npmjs.com/package/@pegasusheavy/enginex)
+
+## Key Features
+
+- Built on Bun's native HTTP server for high performance
+- Koa-compatible `ctx` object with request/response helpers
+- Onion-model middleware composition with async/await
+- Trie-based router with O(m) path matching, path parameters, wildcards, and route groups
+- Built-in CORS middleware with configurable options
+- Built-in request logger with timing
+- Centralized error handler middleware
+- Body parser for JSON, form, and text content types
+- Zero external dependencies -- pure TypeScript, just Bun
+- Easy migration path from Koa (minimal API differences)
+
+## Installation
+
+```bash
+bun add @pegasusheavy/enginex
+```
+
+## Quick Start
+
+```typescript
+import { Application, Router, cors, logger } from "@pegasusheavy/enginex";
+
+const app = new Application();
+const router = new Router();
+
+app.use(logger());
+app.use(cors());
+
+router.get("/", async (ctx) => {
+  ctx.responseBody = { message: "Hello from EngineX!" };
+});
+
+router.get("/users/:id", async (ctx) => {
+  ctx.responseBody = { userId: ctx.params.id };
+});
+
+app.use(router.routes());
+app.listen(3000);
+```
